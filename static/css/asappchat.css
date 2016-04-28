@@ -1,0 +1,8 @@
+#content {
+    margin-top: 100px;
+}
+
+#chatHistory {
+    border: #2c3e50 solid;
+    min-height: 300px;
+}

@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="container">
+        <div class="col-lg-3">
+            <div class="row">
+                <h3>Users</h3>
+            </div>
+            <ul class="users">
+                {% for user in users %}
+                    <li>
+                        <a class="user" name="{{ user.user_name }}">{{ user.user_name }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="col-lg-9">
+            <div class="row">
+                <div id="chatHistory">
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-inline">
+                    <form id="messageForm">
+                        <input class="form-control" type="text" placeholder="Message" name="message">
+                        <button type="submit" class="btn btn-success btn-group-sm">Send</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block moreScripts %}
+    <script src="{{ url_for('static', filename='js/asappchat.js') }}"></script>
+{% endblock %}

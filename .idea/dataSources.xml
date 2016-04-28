@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="DataSourceManagerImpl" format="xml" hash="875423362">
+  <component name="DataSourceManagerImpl" format="xml" hash="4214718011">
     <data-source source="LOCAL" name="Sqlite (Xerial) - AsAppChat.db" uuid="7ed1b0f2-e4c5-4c37-97a5-ffed105016ea">
       <driver-ref>sqlite.xerial</driver-ref>
       <synchronize>true</synchronize>
