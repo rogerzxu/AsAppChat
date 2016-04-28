@@ -36,12 +36,10 @@
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
-                <li class="hidden">
-                    <a href="#page-top"></a>
-                </li>
                 {% if not current_user.is_authenticated %}
                     <li><a href="/">Log In</a></li>
                 {% else %}
+                    <li id="current_user">{{ current_user.user_name }}</li>
                     <li><a href="/logout">Log Out</a></li>
                 {% endif %}
             </ul>
@@ -58,11 +56,6 @@
                 <p>{{ message }}</p>
             {% endfor %}
         </div>
-        {% if current_user.is_authenticated %}
-            <div class="row">
-                <h2>{{ current_user.user_name }}</h2>
-            </div>
-        {% endif %}
     </div>
 
     {% block content %}{% endblock %}

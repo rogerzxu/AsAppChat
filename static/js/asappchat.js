@@ -1,37 +1,70 @@
-function addMessagesToChatHistory(messages) {
+var current_user_name = $("#current_user").text();
+var user_chatting_with = null;
+
+function scrollChatHistoryToBottom() {
+    $("#chatHistory").animate({ scrollTop: $("#chatHistory")[0].scrollHeight}, 0);
+}
+
+function printMessage(message) {
+    if (message.sender === current_user_name) {
+        $('#chatHistory').append('<p><span class=\'fromMe\'>' +
+            message.sender + ':</span>&nbsp&nbsp&nbsp&nbsp&nbsp' +
+            message.message_content + '</p>');
+    } else {
+        $('#chatHistory').append('<p><span class=\'fromOtherPerson\'>' +
+            message.sender + ':</span>&nbsp&nbsp&nbsp&nbsp&nbsp' +
+            message.message_content + '</p>');
+    }
+    scrollChatHistoryToBottom();
+}
+
+function showChatHistory(messages) {
     $('#chatHistory').empty();
     for (i = 0 ; i < messages.length ; i++) {
         var message = messages[i];
-        $('#chatHistory').append('<p>' +
-            message.sender + ':&nbsp&nbsp&nbsp&nbsp&nbsp' +
-            message.message_content + '</p>');
+        printMessage(message);
+    }
+}
+
+function displayNewMessage(message) {
+    if (message.sender === user_chatting_with || message.receiver === user_chatting_with) {
+        printMessage(message);
+    } else {
+        $('a:contains(' + message.sender + ')').append('<sup class=\'newMessage\'>&nbsp;NEW MESSAGE</sup>');
     }
 }
 
 $(document).ready(function() {
-    $('.user').bind('click', function(e) {
-        $('.user').removeAttr('style');
+    $('.users a').bind('click', function(e) {
         e.preventDefault();
-        $(this).css('color','#000000');
-        var name = $(this).attr('name');
+        user_chatting_with = $(this).children().remove().end().text();
+        $('.users a').removeAttr('class');
+
+        $(this).attr('class','selectedUser');
+
+        $('#otherUser').empty();
+        $('#otherUser').append('<h2>' + user_chatting_with + '</h2>');
+
+        $('#messageForm').children().removeAttr('disabled');
+
         $.ajax({
             type: "GET",
-            url: "/chat-history/" + name,
+            url: "/chat-history/" + user_chatting_with,
             accepts: "application/json",
             success: function(data) {
-                addMessagesToChatHistory(data.messages);
+                showChatHistory(data.messages);
             }
         });
     });
 
     var socket = io.connect('http://' + document.domain + ':' + location.port + '/chat');
     socket.on('message', function(data) {
-        $('#chatHistory').append('<p>NEW MESSAGE</p>');
+        displayNewMessage(data);
     });
 
     $('#messageForm').on('submit', function(e) {
         e.preventDefault();
         var message = $('input[name=message]').val();
-        socket.emit('text', {message: message})
+        socket.emit('text', {sender: current_user_name, receiver: user_chatting_with, message_content: message})
     });
 });

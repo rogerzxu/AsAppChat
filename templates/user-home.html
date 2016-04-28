@@ -9,22 +9,19 @@
             <ul class="users">
                 {% for user in users %}
                     <li>
-                        <a class="user" name="{{ user.user_name }}">{{ user.user_name }}</a>
+                        <a>{{ user.user_name }}</a>
                     </li>
                 {% endfor %}
             </ul>
         </div>
         <div class="col-lg-9">
-            <div class="row">
-                <div id="chatHistory">
-
-                </div>
-            </div>
+            <div class="row" id="otherUser"></div>
+            <div class="row" id="chatHistory"></div>
             <div class="row">
                 <div class="form-inline">
                     <form id="messageForm">
-                        <input class="form-control" type="text" placeholder="Message" name="message">
-                        <button type="submit" class="btn btn-success btn-group-sm">Send</button>
+                        <input id="messageInput" class="form-control" type="text" placeholder="Message" name="message" disabled="true">
+                        <button type="submit" class="btn btn-success btn-group-sm" disabled="true">Send</button>
                     </form>
                 </div>
             </div>

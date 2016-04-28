@@ -31,10 +31,25 @@ def connect_handler():
     print(current_user.user_name + " has connected!")
 
 
+@socketio.on('disconnect', namespace='/chat')
+@authenticated_only
+def disconnect_handler():
+    leave_room(current_user.user_name)
+    print(current_user.user_name + " has disconnected!")
+
+
 @socketio.on('text', namespace='/chat')
 @authenticated_only
 def text_handler(data):
-    print('new message: ' + str(data))
+    print(str(data))
+    sender_str = str(data['sender'])
+    receiver_str = str(data['receiver'])
+    message_str = str(data['message_content'])
+    sender_id = query_db('select id from users where user_name = ?', [sender_str], one=True)['id']
+    receiver_id = query_db('select id from users where user_name = ?', [receiver_str], one=True)['id']
+    insert_db('insert into message (sender_user_id, receiver_user_id, message_content) values (?, ?, ?)', [sender_id, receiver_id, message_str])
+    emit('message', data, room=data['sender'])
+    emit('message', data, room=data['receiver'])
 
 
 @login_manager.user_loader
@@ -103,7 +118,7 @@ def user_home():
 @app.route('/chat-history/<withUser>', methods=['GET'])
 @login_required
 def chat_history(withUser):
-    userId = current_user.user_id
+    userId = current_user.id
     query = """select senders.user_name as sender, receivers.user_name as receiver, m.message_content, m.timestamp
               from message m, users senders, users receivers
               where m.sender_user_id = senders.id
