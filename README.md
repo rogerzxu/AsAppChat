@@ -10,7 +10,7 @@ Take home exercise for ASAPP interview process. Write a chat service that suppor
 ## Tech Stack
 
 AsAppChat uses the following packages/libraries to achieve these goals:
-* Python 2.7.11
+* Python 2.7
 * Flask 0.10.1
 * Flask-Login 0.3.2
 * Flask-SocketIO 2.2
