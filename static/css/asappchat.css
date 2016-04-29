@@ -9,12 +9,6 @@
     padding: 10px;
 }
 
-#current_user {
-    padding: 19.5px 15px 15px 19.5px;
-    position: relative;
-    color: #ffffff;
-}
-
 .selectedUser {
     color: #000000;
     font-style: italic;

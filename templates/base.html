@@ -39,7 +39,7 @@
                 {% if not current_user.is_authenticated %}
                     <li><a href="/">Log In</a></li>
                 {% else %}
-                    <li id="current_user">{{ current_user.user_name }}</li>
+                    <li id="current_user"><a href="/user-home">{{ current_user.user_name }}</a></li>
                     <li><a href="/logout">Log Out</a></li>
                 {% endif %}
             </ul>
