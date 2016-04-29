@@ -20,6 +20,14 @@ AsAppChat uses the following packages/libraries to achieve these goals:
 * JQuery 1.11.1
 * Bootstrap 3.3.6
 
+## Usage
+Assuming you have all dependencies have been installed, simply
+
+```
+$ python AsAppChat.py
+  (18404) wsgi starting up on http://127.0.0.1:5000
+```
+
 ## Follow-up questions
 1. How will you implement picture messages? Where is image data stored? How/when are thumbs generated? How are URLs decided on?
 
