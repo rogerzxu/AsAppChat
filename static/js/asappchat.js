@@ -30,9 +30,15 @@ function displayNewMessage(message) {
     if (message.sender === user_chatting_with || message.receiver === user_chatting_with) {
         printMessage(message);
     } else if (message.sender !== current_user_name) {
-        $('a:contains(' + message.sender + ')').append('<sup class=\'newMessage\'>&nbsp;NEW MESSAGE</sup>');
+        var listItem = $('a:contains(' + message.sender + ')');
+        if (listItem.children().length == 0) {
+            listItem.append('<sup class=\'newMessage\'>&nbsp;NEW MESSAGE</sup>');
+        }
     } else {
-        $('a:contains(' + message.receiver + ')').append('<sup class=\'newMessage\'>&nbsp;NEW MESSAGE</sup>');
+        var listItem = $('a:contains(' + message.receiver + ')');
+        if (listItem.children().length == 0) {
+            listItem.append('<sup class=\'newMessage\'>&nbsp;NEW MESSAGE</sup>');
+        }
     }
 }
 
